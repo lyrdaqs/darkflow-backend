@@ -15,7 +15,7 @@ class Album(models.Model):
 class Song(models.Model):
     cover = models.ImageField(null=True, blank=True)
     name = models.CharField(max_length=200)
-    play = models.FileField()
+    play = models.URLField(max_length = 300)
     stream = models.PositiveIntegerField(default=0)
     likes = models.PositiveIntegerField(default=0)
     duration = models.CharField(max_length=20)

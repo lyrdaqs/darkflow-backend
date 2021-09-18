@@ -4,6 +4,8 @@ from .models import Song, Album
 from artist.models import Artist
 from scraping import Scraping
 from darkflow.helper import create_file_by_url
+from .serializers import SongSerializer, AlbumSerializer
+from darkflow.helper import get_object_or_404
 
 
 class AddArtistAlbumsScraping(APIView):
@@ -36,9 +38,17 @@ class AddAlbumsSongsScraping(APIView):
                song_obj.lyrics = track.lyric
                song_obj.artist = artist
                song_obj.album = album
-               create_file_by_url(track.hq_link, song_obj.play)
+               song_obj.play = track.hq_link
                create_file_by_url(track.photo, song_obj.cover)
                song_obj.save()
         
         return Response({})
 
+
+
+class SongDetail(APIView):
+
+    def get(self, request, pk):
+        res = get_object_or_404(Song, SongSerializer, pk)
+        return Response(res.result, res.status)
+    

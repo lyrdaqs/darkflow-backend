@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'account',
     'song',
     'artist',
+    'search',
 
     #thrid-party apps
     'rest_framework',

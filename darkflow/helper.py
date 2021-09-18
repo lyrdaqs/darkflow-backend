@@ -1,6 +1,7 @@
 import tempfile
 import requests
 from django.core import files
+from rest_framework import status
 
 
 class Response:
@@ -40,6 +41,16 @@ def create_file_by_url(file_url, file_field):
         lf.write(block)
     file_field.save(file_name, files.File(lf))
 
+
+def get_object_or_404(Object, serializer, id):
+    try:
+        obj = Object.objects.get(pk=id)
+        srz_data = serializer(obj, many=False)
+        res = Response(srz_data.data, status.HTTP_200_OK)
+        return res
+    except:
+        res = Response({'message':'404 error object is not found'}, status.HTTP_404_NOT_FOUND)
+        return res
 
 
 music_style = MusicStyle()
